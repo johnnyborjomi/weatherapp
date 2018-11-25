@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+nourl"
+    "url": "git+https://github.com/johnnyborjomi/weatherapp.git"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",
