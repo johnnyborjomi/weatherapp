@@ -1,3 +1,15 @@
 {
-  "presets": ["@babel/preset-env", "@babel/preset-react"]
+  "presets": [
+    "@babel/preset-react",
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry"
+      }
+    ]
+  ],
+  "plugins": [
+    "syntax-async-functions",
+    "transform-regenerator"
+  ]
 }
