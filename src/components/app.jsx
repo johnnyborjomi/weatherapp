@@ -5,6 +5,7 @@ import * as React from "react";
 import ApiGetter from "./api-getter";
 
 const test = new ApiGetter();
+//todo: @vm: get default city using geo api
 test.getResponse("Lviv");
 
 export class App extends React.Component {
@@ -32,6 +33,16 @@ export class App extends React.Component {
 
   render() {
     let { cityName, temp, weatherData } = this.state;
+
+    //todo: @vm: get all cities from service
+
+    //todo: @vm: render selector and weather widget as separate components
+
+    //todo: @vm: make weather widget component, - it should receive city, and then
+    //todo: @vm: go to service by itself and get data, and show spinner!
+    //todo: @vm: also here you should have some kind of cityList where you can
+    //todo: @vm: manage cities, i.e. add/remove city widgets, as in zadanie.
+    //todo: @vm: so do that shit.
 
     return (
       <div className="screen">
