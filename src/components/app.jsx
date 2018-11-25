@@ -22,12 +22,14 @@ export class App extends React.Component {
         this.citySelect = document.getElementById('select');
     };
 
-    async getWeather(event) {
+    getWeather(event) {
         console.log(event.target.value);
         let cityName = event.target.value;
         this.setState({ cityName });
-        let weatherData = await this.ApiResoponseGetter.getResponse(cityName);
-        this.setState({ weatherData });
+        this.ApiResoponseGetter.getResponse(cityName).then(weatherData => {
+            this.setState({ weatherData });
+        });
+
 
     }
 
