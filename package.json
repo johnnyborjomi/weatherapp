@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "start": "npm run dev",
     "dev": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production",
     "release": "npm version minor && npm run build "
@@ -12,19 +13,10 @@
     "url": "git+nourl"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.0",
+    "@babel/core": "^7.1.6",
     "@babel/preset-env": "^7.1.6",
-    "@babel/preset-es2017": "^7.0.0-beta.53",
     "@babel/preset-react": "^7.0.0",
-    "@babel/preset-stage-0": "^7.0.0",
-    "babel-core": "^6.26.3",
     "babel-loader": "^8.0.4",
-    "babel-plugin-syntax-async-functions": "^6.13.0",
-    "babel-plugin-transform-regenerator": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
