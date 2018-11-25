@@ -20,11 +20,11 @@ const config = {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract(["css-loader", "sass-loader"])
       },
-        {
-            test: /.jsx?$/,
-            loader: "babel-loader",
-            exclude: /node_modules/
-        },
+      {
+        test: /.jsx?$/,
+        loader: "babel-loader",
+        exclude: /node_modules/
+      },
       { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]
   },
@@ -36,8 +36,8 @@ const config = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       title: "Weatherapp"
-    }),
-    new CopyWebpackPlugin([{ from: "src/assets/", to: "assets" }])
+    })
+    // new CopyWebpackPlugin([{ from: "src/assets/", to: "assets" }])
   ]
 };
 
