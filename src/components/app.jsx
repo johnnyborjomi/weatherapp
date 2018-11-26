@@ -55,8 +55,17 @@ export class App extends React.Component {
           <option value="Lviv">Lviv</option>
         </select>
         <div className="results">
-          <span style={{ fontSize: "5em" }}>{weatherData.icon}</span>
-          <span>{cityName}</span>
+          <span style={{ fontSize: "5em" }}>
+            <div>
+              {cityName} t: {weatherData.temp}°
+            </div>
+
+            <div>
+              {weatherData.icon}
+              {weatherData.description}
+            </div>
+          </span>
+          <br />
           <span>{JSON.stringify(weatherData)}</span>
         </div>
       </div>

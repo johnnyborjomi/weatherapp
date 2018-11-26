@@ -25,20 +25,23 @@ export const weatherIcons = {
 };
 
 //todo: @vm: get only needed data from api, and return only it
-function weatherMapper({ weather }) {
+function weatherMapper({ weather, main }) {
   //get first weather obj from weather arr
   let [w1] = weather;
 
   let icon = weatherIcons[w1.icon] || "⛔️";
+  let { description } = w1;
+  let { temp } = main;
 
-  return { weather, icon };
+  return { weather, icon, description, temp };
 }
 
 class ApiGetter {
   constructor() {
     this.log = "";
     this.apiKey = "&appid=fc224f33111b95796a7a8bcfc97ddea5";
-    this.apiDomain = "https://api.openweathermap.org/data/2.5/weather?q=";
+    this.apiDomain =
+      "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
   }
 
   //todo: @vm: rename: get weather by city (meaningful name)
