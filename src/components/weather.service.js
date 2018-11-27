@@ -36,7 +36,7 @@ function weatherMapper({ weather, main }) {
   return { weather, icon, description, temp };
 }
 
-class ApiGetter {
+export default class WeatherService {
   constructor() {
     this.log = "";
     this.apiKey = "&appid=fc224f33111b95796a7a8bcfc97ddea5";
@@ -55,5 +55,3 @@ class ApiGetter {
       });
   }
 }
-
-export default ApiGetter;

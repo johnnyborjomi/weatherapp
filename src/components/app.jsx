@@ -2,9 +2,9 @@ import { throttle } from "lodash";
 
 import * as React from "react";
 
-import ApiGetter from "./api-getter";
+import WeatherService from "./weather.service";
 
-const test = new ApiGetter();
+const test = new WeatherService();
 //todo: @vm: get default city using geo api
 test.getResponse("Lviv");
 
@@ -17,7 +17,7 @@ export class App extends React.Component {
       weatherData: {}
     };
 
-    this.ApiResoponseGetter = new ApiGetter();
+    this.ApiResoponseGetter = new WeatherService();
 
     this.citySelect = document.getElementById("select");
   }
