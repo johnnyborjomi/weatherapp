@@ -30,10 +30,10 @@ export default class WeatherWidget extends React.Component {
   }
 
   render() {
-    let { city } = this.props;
+    let { city, onDeleteWidget } = this.props;
     let { weatherData } = this.state;
 
-    let { description, temp, icon } = weatherData;
+    let { description = "...", temp = 0, icon = "?" } = weatherData;
 
     temp = Math.floor(temp);
 
@@ -51,6 +51,9 @@ export default class WeatherWidget extends React.Component {
             <div className="temp-units">°C</div>
           </div>
           <div className="icon">{icon}</div>
+        </div>
+        <div className="button-delete" onClick={() => onDeleteWidget(city)}>
+          ✖️
         </div>
       </div>
     );
