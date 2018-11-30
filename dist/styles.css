@@ -1,10 +1,7 @@
-@font-face {
-  font-family: Gamija; }
-
-body {
+@import url(https://fonts.googleapis.com/css?family=Roboto);body {
   margin: 0;
   padding: 0;
-  font-family: Gamija, "Gamja Flower", cursive, Arial, Helvetica, sans-serif;
+  font-family: "Roboto", sans-serif;
   background: gainsboro; }
 
 .app {
@@ -14,5 +11,35 @@ body {
 
 .app-title {
   text-align: center; }
+.weather-widget {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); }
+  .weather-widget .city {
+    font-size: 1.5em; }
+  .weather-widget .desc {
+    text-transform: capitalize;
+    font-size: 14px;
+    opacity: 0.6; }
+  .weather-widget .main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; }
+  .weather-widget .temp {
+    display: flex;
+    flex-direction: row; }
+    .weather-widget .temp .temp-value {
+      font-size: 5em;
+      line-height: 1em; }
+    .weather-widget .temp .temp-units {
+      font-size: 2em; }
+  .weather-widget .icon {
+    font-size: 3.5em;
+    line-height: 1.5em;
+    align-self: center; }
 
 /*# sourceMappingURL=styles.css.map*/

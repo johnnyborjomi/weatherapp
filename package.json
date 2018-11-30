@@ -1,12 +1,12 @@
 {
   "name": "weatherapp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "start": "npm run dev",
     "dev": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production",
-    "release": "npm version minor && npm run build "
+    "release": "npm version patch -f && npm run build && git add -A dist && git commit --amend --no-edit"
   },
   "repository": {
     "type": "git",
