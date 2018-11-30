@@ -36,6 +36,7 @@ function weatherMapper({ weather, main }) {
   return { weather, icon, description, temp };
 }
 
+//todo: @vm: no need to use class here, use just simple func instead
 export default class WeatherService {
   constructor() {
     this.log = "";
@@ -45,10 +46,11 @@ export default class WeatherService {
   }
 
   //todo: @vm: rename: get weather by city (meaningful name)
-  getResponse(city) {
+  getWeatherByCity(city) {
     let apiUrl = this.apiDomain + city + this.apiKey;
     return fetch(apiUrl)
       .then(data => data.json())
+      .then(data => (console.log(data), data))
       .then(weatherMapper)
       .catch(err => {
         console.log(err);
