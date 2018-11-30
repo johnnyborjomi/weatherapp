@@ -16,3 +16,9 @@ body {
 .app-title {
   text-align: center;
 }
+
+.city-selector {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
