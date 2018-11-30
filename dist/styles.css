@@ -11,14 +11,32 @@
 
 .app-title {
   text-align: center; }
+
+.city-selector {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; }
 .weather-widget {
+  position: relative;
   display: flex;
   flex-direction: column;
   margin: 10px;
   padding: 10px;
+  width: 240px;
+  box-sizing: border-box;
   background-color: white;
   border-radius: 4px;
-  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); }
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  transition: background-color 300ms ease-in-out; }
+  .weather-widget .button-delete {
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 10px;
+    cursor: pointer; }
+  .weather-widget:hover .button-delete {
+    visibility: visible; }
   .weather-widget .city {
     font-size: 1.5em; }
   .weather-widget .desc {
