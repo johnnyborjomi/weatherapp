@@ -22,3 +22,9 @@ body {
   flex-direction: row;
   justify-content: space-around;
 }
+
+.widgets {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
