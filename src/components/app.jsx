@@ -1,44 +1,45 @@
 import * as React from "react";
+import { difference } from "lodash";
 
 import WeatherWidget from "./weather-widget";
 
 //todo: @vm: get default city using geo api
 const defaultCity = "Kharkiv";
 
+//todo: @vm: get all cities from service
+const fullCityList = [
+  "Kharkiv",
+  "Lviv",
+  "Kiev",
+  "London",
+  "Tokyo",
+  "Moscow",
+  "Paris",
+  "Phuket"
+];
+
 export class App extends React.Component {
+  state = { cities: [defaultCity, "Phuket"] };
+
   constructor(props) {
     super(props);
-
-    this.state = {
-      cityName: null,
-      weatherData: {}
-    };
-
-    this.citySelect = document.getElementById("select");
   }
 
   handleCityChange(event) {
     console.log(event.target.value);
-    let testCity = event.target.value;
+    let newCity = event.target.value;
 
-    this.setState({ testCity });
+    this.setState(({ cities }) => ({ cities: [...cities, newCity] }));
+  }
+
+  deleteCity(city) {
+    this.setState(({ cities }) => ({ cities: difference(cities, [city]) }));
   }
 
   render() {
-    let { testCity } = this.state;
+    let { cities } = this.state;
 
-    //todo: @vm: get all cities from service
-
-    let cities = [
-      "Kharkiv",
-      "Lviv",
-      "Kiev",
-      "London",
-      "Tokyo",
-      "Moscow",
-      "Paris",
-      "Phuket"
-    ];
+    let cityList = difference(fullCityList, cities);
 
     //todo: @vm: render selector and weather widget as separate components
 
@@ -50,19 +51,27 @@ export class App extends React.Component {
 
     return (
       <div className="screen">
-        <span>Select City</span>
+        <label className="city-selector">
+          <span>Select City</span>
+          <select id="select" onChange={event => this.handleCityChange(event)}>
+            <option>select city</option>
+            {cityList.map(city => (
+              <option key={city} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
+        </label>
+
         <hr />
-        <select id="select" onChange={event => this.handleCityChange(event)}>
-          {cities.map(city => (
-            <option key={city} value={city}>
-              {city}
-            </option>
-          ))}
-        </select>
         <div className="widgets">
-          <WeatherWidget city={defaultCity} />
-          <WeatherWidget city={"Lviv"} />
-          <WeatherWidget city={testCity} />
+          {cities.map(city => (
+            <WeatherWidget
+              key={city}
+              city={city}
+              onDeleteWidget={city => this.deleteCity(city)}
+            />
+          ))}
         </div>
       </div>
     );
