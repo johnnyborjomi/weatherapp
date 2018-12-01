@@ -25,7 +25,7 @@ export const weatherIcons = {
 };
 
 //todo: @vm: get only needed data from api, and return only it
-function weatherMapper({ weather, main }) {
+function weatherMapper({ weather, main, name: cityName }) {
   //get first weather obj from weather arr
   let [w1] = weather;
 
@@ -33,21 +33,44 @@ function weatherMapper({ weather, main }) {
   let { description } = w1;
   let { temp } = main;
 
-  return { weather, icon, description, temp };
+  return { cityName, weather, icon, description, temp };
+}
+
+function getCurrentGeoPosition() {
+  return new Promise((resolve, reject) =>
+    navigator.geolocation.getCurrentPosition(resolve, reject)
+  ).then(({ coords }) => coords);
 }
 
 //todo: @vm: no need to use class here, use just simple func instead
 export default class WeatherService {
   constructor() {
-    this.log = "";
-    this.apiKey = "&appid=fc224f33111b95796a7a8bcfc97ddea5";
-    this.apiDomain =
-      "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+    const units = "metric";
+    const apiKey = "fc224f33111b95796a7a8bcfc97ddea5";
+    this.apiDomain = `https://api.openweathermap.org/data/2.5/weather?units=${units}&appid=${apiKey}`;
   }
 
-  //todo: @vm: rename: get weather by city (meaningful name)
+  getCurrentCityName() {
+    return getCurrentGeoPosition()
+      .then(coords => this.getWeatherByCoords(coords))
+      .then(({ cityName }) => cityName);
+  }
+
+  getWeatherByCoords({ latitude, longitude }) {
+    let coordsQuery = `&lat=${latitude}&lon=${longitude}`;
+    let apiUrl = this.apiDomain + coordsQuery;
+
+    return this.getWeather(apiUrl);
+  }
+
   getWeatherByCity(city) {
-    let apiUrl = this.apiDomain + city + this.apiKey;
+    let cityQuery = `&q=${city}`;
+    let apiUrl = this.apiDomain + cityQuery;
+
+    return this.getWeather(apiUrl);
+  }
+
+  getWeather(apiUrl) {
     return fetch(apiUrl)
       .then(data => data.json())
       .then(data => (console.log(data), data))

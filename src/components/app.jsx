@@ -2,6 +2,7 @@ import * as React from "react";
 import { difference } from "lodash";
 
 import WeatherWidget from "./weather-widget";
+import WeatherService from "./weather.service";
 
 //todo: @vm: get default city using geo api
 const defaultCity = "Kharkiv";
@@ -15,7 +16,11 @@ const fullCityList = [
   "Tokyo",
   "Moscow",
   "Paris",
-  "Phuket"
+  "Phuket",
+  "Berlin",
+  "Kiel",
+  "Sharm ash Shaykh",
+  "Rome"
 ];
 
 export class App extends React.Component {
@@ -23,6 +28,15 @@ export class App extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    //add current city to the list
+    new WeatherService()
+      .getCurrentCityName()
+      .then(cityName =>
+        this.setState(({ cities }) => ({ cities: [cityName, ...cities] }))
+      );
   }
 
   handleCityChange(event) {
