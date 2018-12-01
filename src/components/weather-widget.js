@@ -1,4 +1,5 @@
 import * as React from "react";
+import classnames from "classnames";
 
 import WeatherService from "./weather.service";
 
@@ -35,12 +36,18 @@ export default class WeatherWidget extends React.Component {
 
     let { description = "...", temp = 0, icon = "?" } = weatherData;
 
+    //todo: do it better
+    let isLoading = !weatherData.icon;
+
     temp = Math.floor(temp);
 
-    let tempBgc = temp > 0 ? "#fff3d0" : "#d8eeff";
+    let tempBgc = isLoading ? "#fff" : temp > 0 ? "#fff3d0" : "#d8eeff";
 
     return (
-      <div className="weather-widget" style={{ backgroundColor: tempBgc }}>
+      <div
+        className={classnames(["weather-widget", { "is-loading": isLoading }])}
+        style={{ backgroundColor: tempBgc }}
+      >
         <div className="city">{city}</div>
         <div className="desc">
           {new Date().toDateString()}, {description}

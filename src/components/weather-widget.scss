@@ -47,6 +47,17 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    visibility: visible;
+    transition: all 300ms ease-in-out;
+  }
+
+  &.is-loading {
+    .main {
+      visibility: hidden;
+      opacity: 0;
+      transform: translateX(10px);
+    }
   }
 
   .temp {
