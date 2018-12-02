@@ -3,6 +3,7 @@ import { difference } from "lodash";
 
 import WeatherWidget from "./weather-widget";
 import WeatherService from "./weather.service";
+import CitySearch from './city-search';
 
 //todo: @vm: get default city using geo api
 const defaultCity = "Kharkiv";
@@ -75,6 +76,7 @@ export class App extends React.Component {
               </option>
             ))}
           </select>
+          <CitySearch />
         </label>
 
         <hr />
