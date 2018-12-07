@@ -1,9 +1,9 @@
 import * as React from "react";
 import { difference } from "lodash";
 
-import WeatherWidget from "./weather-widget";
-import WeatherService from "./weather.service";
-import CitySearch from './city-search';
+import WeatherWidget from "./weather-widget/weather-widget";
+import WeatherService from "./weather-widget/weather.service";
+import CitySearch from './city-search/city-search';
 
 //todo: @vm: get default city using geo api
 const defaultCity = "Kharkiv";
