@@ -1,17 +1,15 @@
 .city-selector {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    flex-wrap: wrap;
     padding: 20px 0;
     position: relative;
     z-index: 1;
+    padding-top: 0;
+    max-width: 640px;
+    margin: 0 auto;
   }
 
 .city-search {
     position: relative;
     width: 100%;
-    margin: 0 10px;
 
     &__suggestion { 
         list-style: none;
@@ -39,6 +37,11 @@
                 cursor: pointer;
             }
         } 
+        &.is-loading {
+            li {
+                color: gray;
+            }
+        }
     }
 
     .overlay {

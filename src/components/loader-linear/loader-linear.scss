@@ -1,0 +1,51 @@
+
+.loader-linear {
+    --bar-width-min: 10vh;
+    --bar-width-max: 30vh;
+    --color: hsl(265, 100%, 47%);
+  
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+  
+    transition: all 300ms ease-in-out;
+  
+    &__track {
+      height: inherit;
+      opacity: 0.2;
+      background-color: var(--color);
+    }
+  
+    &__indicator {
+      position: absolute;
+      top: 0;
+      width: 0vw;
+      height: inherit;
+      background: var(--color);
+      transition: inherit;
+    }
+  
+    &.is-loading {
+      height: 4px;
+      .loader-linear__indicator {
+        animation: pg-linear 1500ms infinite ease-in-out;
+      }
+    }
+  }
+  
+  @keyframes pg-linear {
+    0% {
+      width: var(--bar-width-min);
+    }
+  
+    50% {
+      width: 30vw;
+    }
+  
+    100% {
+      transform: translateX(100vw);
+    }
+  }

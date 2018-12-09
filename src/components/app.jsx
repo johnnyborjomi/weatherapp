@@ -67,7 +67,6 @@ export class App extends React.Component {
     return (
       <div className="screen">
         <div className="city-selector">
-          <span>Select City</span>
           <CitySearch
             onSearch={event => this.handleCityChange(event)}
           />

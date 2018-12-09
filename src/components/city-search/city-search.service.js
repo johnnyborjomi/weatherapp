@@ -18,10 +18,14 @@
 import { cities } from '../../assets/mappedCityList';
 
 export function getCities(query) {
-    if (query.length < 2) return [];
+    if (query.length < 1) return Promise.resolve([]);
     let filtredCities = cities.filter((city, i) => {
         return city.toLowerCase().substr(0, query.length) == query.toLowerCase();
     })
 
-    return filtredCities.slice(0, 10);
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(filtredCities.slice(0, 10));
+        }, 1000);
+    });
 }

@@ -25,6 +25,40 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center; }
+.loader-linear {
+  --bar-width-min: 10vh;
+  --bar-width-max: 30vh;
+  --color: hsl(265, 100%, 47%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  overflow: hidden;
+  transition: all 300ms ease-in-out; }
+  .loader-linear__track {
+    height: inherit;
+    opacity: 0.2;
+    background-color: var(--color); }
+  .loader-linear__indicator {
+    position: absolute;
+    top: 0;
+    width: 0vw;
+    height: inherit;
+    background: var(--color);
+    transition: inherit; }
+  .loader-linear.is-loading {
+    height: 4px; }
+    .loader-linear.is-loading .loader-linear__indicator {
+      animation: pg-linear 1500ms infinite ease-in-out; }
+
+@keyframes pg-linear {
+  0% {
+    width: var(--bar-width-min); }
+  50% {
+    width: 30vw; }
+  100% {
+    transform: translateX(100vw); } }
 .weather-widget {
   position: relative;
   display: flex;
@@ -75,18 +109,16 @@ body {
     line-height: 1.5em;
     align-self: center; }
 .city-selector {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
   padding: 20px 0;
   position: relative;
-  z-index: 1; }
+  z-index: 1;
+  padding-top: 0;
+  max-width: 640px;
+  margin: 0 auto; }
 
 .city-search {
   position: relative;
-  width: 100%;
-  margin: 0 10px; }
+  width: 100%; }
   .city-search__suggestion {
     list-style: none;
     position: absolute;
@@ -107,6 +139,8 @@ body {
       .city-search__suggestion li:not([disabled]):hover {
         background: rgba(0, 0, 0, 0.1);
         cursor: pointer; }
+    .city-search__suggestion.is-loading li {
+      color: gray; }
   .city-search .overlay {
     position: fixed;
     width: 100vw;
