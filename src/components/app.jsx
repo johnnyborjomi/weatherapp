@@ -41,8 +41,8 @@ export class App extends React.Component {
   }
 
   handleCityChange(event) {
-    console.log(event.target.value);
-    let newCity = event.target.value;
+    console.log(event.target.innerText);
+    let newCity = event.target.innerText;
 
     this.setState(({ cities }) => ({ cities: [...cities, newCity] }));
   }
@@ -66,18 +66,12 @@ export class App extends React.Component {
 
     return (
       <div className="screen">
-        <label className="city-selector">
+        <div className="city-selector">
           <span>Select City</span>
-          <select id="select" onChange={event => this.handleCityChange(event)}>
-            <option>select city</option>
-            {cityList.map(city => (
-              <option key={city} value={city}>
-                {city}
-              </option>
-            ))}
-          </select>
-          <CitySearch />
-        </label>
+          <CitySearch
+            onSearch={event => this.handleCityChange(event)}
+          />
+        </div>
 
         <hr />
         <div className="widgets">

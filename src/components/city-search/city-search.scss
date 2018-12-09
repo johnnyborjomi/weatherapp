@@ -4,6 +4,8 @@
     justify-content: space-around;
     flex-wrap: wrap;
     padding: 20px 0;
+    position: relative;
+    z-index: 1;
   }
 
 .city-search {
@@ -16,7 +18,6 @@
         position: absolute;
         top: 100%;
         left: 0;
-        z-index: 1;
         background: white;
         padding: 12px 0;
         border-radius: 4px;
@@ -24,6 +25,7 @@
         transition: background-color 300ms ease-in-out;
         visibility: hidden;
         width: 100%;
+
         &.is-active {
             visibility: visible;
         }
@@ -31,11 +33,12 @@
         li {
             padding: 16px 12px;
             display: block;
-            &:hover {
+
+            &:not([disabled]):hover {
                 background: rgba(0,0,0,.1);
                 cursor: pointer;
             }
-        }
+        } 
     }
 
     .overlay {
@@ -47,6 +50,8 @@
         visibility: hidden;
         opacity: 0;
         background: rgba(0,0,0,.4);
+        z-index: -1;
+
         &.is-active {
             visibility: visible;
             opacity: 1;
@@ -64,6 +69,8 @@
         background: transparent;
         width: 100%;
         margin: 10px 0;
+        background: white;
+        font-size: 24px;
     }
 }
 

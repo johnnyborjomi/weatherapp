@@ -11,13 +11,8 @@ let mappedCities = cities.filter((city) => {
 }).map(city => city.name);
 
 function removeDuplicates(arr) {
-    let obj = {};
-    arr.forEach(element => {
-        obj[element] = true;
-    });
-    return Object.keys(obj);
+    return [...new Set(arr)];
 }
-
 mappedCities = removeDuplicates(mappedCities);
 
 console.log(mappedCities[1], mappedCities.length);
