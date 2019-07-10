@@ -3,6 +3,7 @@
   "version": "1.0.4",
   "main": "index.js",
   "scripts": {
+    "test": "",
     "start": "npm run dev",
     "dev": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production",
