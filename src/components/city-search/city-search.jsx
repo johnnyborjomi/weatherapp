@@ -23,35 +23,33 @@ export default class CitySearch extends React.Component {
 
   weatherService = new WeatherService();
 
-  dataHandler(event) {
-    let query = event.target.value;
+  dataHandler(value) {
+    let query = value;
     this.setState({ isLoading: true });
     getCities(query).then(data =>
       this.setState({ suggestList: data, isLoading: false })
     );
   }
 
-  onChange(event) {
-    event.persist();
-    this.debouncedDataHandler(event);
-    this.checkInputValue(event);
+  onChange(value) {
+    this.debouncedDataHandler(value);
+    this.checkInputValue(value);
   }
 
-  openSuggest(event) {
+  openSuggest(value) {
     this.setState({ showSuggest: true });
-    this.checkInputValue(event);
+    this.checkInputValue(value);
   }
 
-  closeSuggest(event) {
-    event.persist();
+  closeSuggest(value) {
     setTimeout(() => {
       this.setState({ showSuggest: false });
-      this.checkInputValue(event);
+      this.checkInputValue(value);
     }, 200);
   }
 
-  checkInputValue(event) {
-    this.setState({ inputValue: event.target.value });
+  checkInputValue(value) {
+    this.setState({ inputValue: value });
   }
 
   renderSuggestions(suggest) {
@@ -104,17 +102,17 @@ export default class CitySearch extends React.Component {
           type="text"
           placeholder="enter city / lat,lng / ZIP"
           className="city-search__input"
-          onChange={event => this.onChange(event)}
+          onChange={event => this.onChange(event.target.value)}
           onFocus={event => {
-            this.openSuggest(event);
+            this.openSuggest(event.target.value);
           }}
           onKeyPress={event => {
-            this.openSuggest(event);
+            this.openSuggest(event.target.value);
           }}
           onClick={event => {
-            this.openSuggest(event);
+            this.openSuggest(event.target.value);
           }}
-          onBlur={event => this.closeSuggest(event)}
+          onBlur={event => this.closeSuggest(event.target.value)}
         />
         <ul
           className={classnames([
