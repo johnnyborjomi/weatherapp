@@ -1,7 +1,7 @@
 import * as React from "react";
 import classnames from "classnames";
 
-import { debounce, throttle } from "lodash";
+import { debounce } from "lodash";
 import { getCities } from "./city-search.service.js";
 import LoaderLinear from "../loader-linear/loader-linear.jsx";
 
