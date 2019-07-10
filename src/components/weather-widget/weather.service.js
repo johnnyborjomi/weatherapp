@@ -31,9 +31,9 @@ function weatherMapper({ weather, main, name: cityName }) {
 
   let icon = weatherIcons[w1.icon] || "⛔️";
   let { description } = w1;
-  let { temp } = main;
+  let { temp, pressure, humidity } = main;
 
-  return { cityName, weather, icon, description, temp };
+  return { cityName, weather, icon, description, temp, pressure, humidity };
 }
 
 function getCurrentGeoPosition() {
@@ -47,7 +47,9 @@ export default class WeatherService {
   constructor() {
     const units = "metric";
     const apiKey = "fc224f33111b95796a7a8bcfc97ddea5";
-    this.apiDomain = `https://api.openweathermap.org/data/2.5/weather?units=${units}&appid=${apiKey}`;
+    this.apiDomain = `https://api.openweathermap.org/data/2.5/`;
+    const basicParams = `?units=${units}&appid=${apiKey}`;
+    this.weatherEndpoint = `${this.apiDomain}weather${basicParams}`;
   }
 
   getCurrentCityName() {
@@ -58,25 +60,27 @@ export default class WeatherService {
 
   getWeatherByCoords({ latitude, longitude }) {
     let coordsQuery = `&lat=${latitude}&lon=${longitude}`;
-    let apiUrl = this.apiDomain + coordsQuery;
+    let apiUrl = this.weatherEndpoint + coordsQuery;
 
     return this.getWeather(apiUrl);
   }
 
   getWeatherByCity(city) {
     let cityQuery = `&q=${city}`;
-    let apiUrl = this.apiDomain + cityQuery;
+    let apiUrl = this.weatherEndpoint + cityQuery;
 
     return this.getWeather(apiUrl);
   }
 
   getWeather(apiUrl) {
-    return fetch(apiUrl)
-      .then(data => data.json())
-      .then(data => (console.log(data), data))
-      .then(weatherMapper)
-      .catch(err => {
-        console.log(err);
-      });
+    return (
+      fetch(apiUrl)
+        .then(data => data.json())
+        // .then(data => (console.log(data), data))
+        .then(weatherMapper)
+        .catch(err => {
+          console.log(err);
+        })
+    );
   }
 }

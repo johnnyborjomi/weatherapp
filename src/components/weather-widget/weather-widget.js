@@ -34,7 +34,13 @@ export default class WeatherWidget extends React.Component {
     let { city, onDeleteWidget } = this.props;
     let { weatherData } = this.state;
 
-    let { description = "...", temp = 0, icon = "?" } = weatherData;
+    let {
+      description = "...",
+      temp = 0,
+      humidity,
+      pressure,
+      icon = "?"
+    } = weatherData;
 
     //todo: do it better
     let isLoading = !weatherData.icon;
@@ -51,6 +57,10 @@ export default class WeatherWidget extends React.Component {
         <div className="city">{city}</div>
         <div className="desc">
           {new Date().toDateString()}, {description}
+          <div>
+            <div>humidity: {humidity}</div>
+            <div>pressure: {pressure}</div>
+          </div>
         </div>
         <div className="main">
           <div className="temp">
