@@ -5,8 +5,7 @@ import WeatherWidget from "./weather-widget/weather-widget";
 import WeatherService from "./weather-widget/weather.service";
 import CitySearch from "./city-search/city-search";
 
-//todo: @vm: get default city using geo api
-const defaultCity = "Kharkiv";
+const defaultCity = "New York";
 
 //todo: @vm: get all cities from service
 const fullCityList = [
@@ -25,7 +24,7 @@ const fullCityList = [
 ];
 
 export class App extends React.Component {
-  state = { cities: [defaultCity, "New York"] };
+  state = { cities: [defaultCity] };
 
   constructor(props) {
     super(props);
