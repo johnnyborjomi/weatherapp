@@ -3,7 +3,7 @@ import { difference } from "lodash";
 
 import WeatherWidget from "./weather-widget/weather-widget";
 import WeatherService from "./weather-widget/weather.service";
-import CitySearch from './city-search/city-search';
+import CitySearch from "./city-search/city-search";
 
 //todo: @vm: get default city using geo api
 const defaultCity = "Kharkiv";
@@ -44,6 +44,11 @@ export class App extends React.Component {
     console.log(event.target.innerText);
     let newCity = event.target.innerText;
 
+    if (this.state.cities.indexOf(newCity) >= 0) {
+      console.log("city already added");
+      return;
+    }
+
     this.setState(({ cities }) => ({ cities: [...cities, newCity] }));
   }
 
@@ -67,9 +72,7 @@ export class App extends React.Component {
     return (
       <div className="screen">
         <div className="city-selector">
-          <CitySearch
-            onSearch={event => this.handleCityChange(event)}
-          />
+          <CitySearch onSearch={event => this.handleCityChange(event)} />
         </div>
 
         <hr />
