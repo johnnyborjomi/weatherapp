@@ -58,8 +58,8 @@ export default class WeatherWidget extends React.Component {
         <div className="desc">
           {new Date().toDateString()}, {description}
           <div>
-            <div>humidity: {humidity}</div>
-            <div>pressure: {pressure}</div>
+            <div>💧humidity: {humidity}</div>
+            <div>🌡pressure: {pressure}</div>
           </div>
         </div>
         <div className="main">
