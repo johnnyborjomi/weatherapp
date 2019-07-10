@@ -26,6 +26,7 @@ export default class CitySearch extends React.Component {
   dataHandler(value) {
     let query = value;
     this.setState({ isLoading: true });
+
     getCities(query).then(data =>
       this.setState({ suggestList: data, isLoading: false })
     );
@@ -60,30 +61,6 @@ export default class CitySearch extends React.Component {
     ));
   }
 
-  renderLatLngSuggestion(latLng) {
-    const hadler = () => {
-      this.weatherService.getCityNameByLatLng(latLng).then(cityName => {
-        if (cityName) this.props.onSearch(cityName);
-      });
-    };
-
-    return (
-      <li onClick={hadler}>
-        🌐 coordinates: {latLng.latitude},{latLng.longitude}
-      </li>
-    );
-  }
-
-  renderZipSuggestion(zip) {
-    const hadler = () => {
-      this.weatherService.getCityNameByZip(zip).then(cityName => {
-        if (cityName) this.props.onSearch(cityName);
-      });
-    };
-
-    return <li onClick={hadler}>🤐 zip: {zip}</li>;
-  }
-
   render() {
     const { suggestList, inputValue, isLoading, showSuggest } = this.state;
 
@@ -91,10 +68,6 @@ export default class CitySearch extends React.Component {
       suggestList.length === 0 && inputValue.length > 0 && !isLoading;
 
     const isEmptySearch = suggestList.length === 0 && inputValue.length === 0;
-
-    const latLng = getLatLng(inputValue);
-
-    const zip = getZip(inputValue);
 
     return (
       <div className="city-search">
@@ -122,11 +95,7 @@ export default class CitySearch extends React.Component {
         >
           {!isNothingFound && this.renderSuggestions(suggestList)}
           {isEmptySearch && this.renderSuggestions(defaultCities)}
-          {isNothingFound && !latLng && !zip && (
-            <li disabled>Nothing Found.</li>
-          )}
-          {latLng && this.renderLatLngSuggestion(latLng)}
-          {zip && this.renderZipSuggestion(zip)}
+          {isNothingFound && <li disabled>Nothing Found.</li>}
           <LoaderLinear isLoading={this.state.isLoading} />
         </ul>
         <div
@@ -135,30 +104,4 @@ export default class CitySearch extends React.Component {
       </div>
     );
   }
-}
-
-function getZip(query = "") {
-  const zipRegex = /^\d{5}(?:[-\s]\d{4})?$/;
-
-  const matched = zipRegex.exec(query);
-
-  if (!Array.isArray(matched)) return null;
-
-  return matched;
-}
-
-function getLatLng(query = "") {
-  // regex from here:
-  // https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
-  const latLngRegex = /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
-
-  const matched = latLngRegex.exec(query);
-
-  if (!Array.isArray(matched)) return null;
-
-  // indicies depend on regex
-  const latitude = matched[1];
-  const longitude = matched[4];
-
-  return { latitude, longitude };
 }
