@@ -6,6 +6,7 @@ import { getCities } from "./city-search.service.js";
 import LoaderLinear from "../loader-linear/loader-linear.jsx";
 
 import "./city-search.scss";
+import WeatherService from "../weather-widget/weather.service.js";
 
 const defaultCities = ["New York", "Tokyo", "Toronto", "Kharkiv"];
 
@@ -19,6 +20,8 @@ export default class CitySearch extends React.Component {
   };
 
   debouncedDataHandler = debounce(this.dataHandler, 500);
+
+  weatherService = new WeatherService();
 
   dataHandler(event) {
     let query = event.target.value;
@@ -53,24 +56,41 @@ export default class CitySearch extends React.Component {
 
   renderSuggestions(suggest) {
     return suggest.map(city => (
-      <li key={city.toString()} onClick={() => this.props.onSearch(event)}>
+      <li key={city} onClick={() => this.props.onSearch(city)}>
         {city}
       </li>
     ));
   }
 
+  renderLatLngSuggestion(latLng) {
+    const hadler = () => {
+      this.weatherService.getCityNameByLatLng(latLng).then(cityName => {
+        this.props.onSearch(cityName);
+      });
+    };
+
+    return (
+      <li onClick={hadler}>
+        🌐 coordinates: {latLng.latitude},{latLng.longitude}
+      </li>
+    );
+  }
+
   render() {
-    let { onSearch } = this.props;
-    let { suggestList, inputValue, isLoading, showSuggest } = this.state;
-    let isNothingFound =
+    const { suggestList, inputValue, isLoading, showSuggest } = this.state;
+
+    const isNothingFound =
       suggestList.length === 0 && inputValue.length > 0 && !isLoading;
-    let isEmptySearch = suggestList.length === 0 && inputValue.length === 0;
+
+    const isEmptySearch = suggestList.length === 0 && inputValue.length === 0;
+
+    const latLng = getLatLng(inputValue);
 
     return (
       <div className="city-search">
         <input
           type="text"
-          placeholder="Select city"
+          placeholder="input city / lat,lng"
           className="city-search__input"
           onChange={event => this.onChange(event)}
           onFocus={event => {
@@ -92,7 +112,9 @@ export default class CitySearch extends React.Component {
         >
           {!isNothingFound && this.renderSuggestions(suggestList)}
           {isEmptySearch && this.renderSuggestions(defaultCities)}
-          {isNothingFound && <li disabled>Nothing Found.</li>}
+          {isNothingFound && !latLng && <li disabled>Nothing Found.</li>}
+          {latLng && this.renderLatLngSuggestion(latLng)}
+
           <LoaderLinear isLoading={this.state.isLoading} />
         </ul>
         <div
@@ -101,4 +123,20 @@ export default class CitySearch extends React.Component {
       </div>
     );
   }
+}
+
+function getLatLng(query = "") {
+  // regex from here:
+  // https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
+  const latLngRegex = /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
+
+  const matched = latLngRegex.exec(query);
+
+  if (!Array.isArray(matched)) return null;
+
+  // indicies depend on regex
+  const latitude = matched[1];
+  const longitude = matched[4];
+
+  return { latitude, longitude };
 }

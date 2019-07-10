@@ -40,10 +40,7 @@ export class App extends React.Component {
       );
   }
 
-  handleCityChange(event) {
-    console.log(event.target.innerText);
-    let newCity = event.target.innerText;
-
+  handleCityChange(newCity) {
     if (this.state.cities.indexOf(newCity) >= 0) {
       console.log("city already added");
       return;

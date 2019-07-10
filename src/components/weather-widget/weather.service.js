@@ -53,10 +53,12 @@ export default class WeatherService {
   }
 
   getCurrentCityName() {
-    return getCurrentGeoPosition()
-      .then(coords => this.getWeatherByCoords(coords))
-      .then(({ cityName }) => cityName);
+    return getCurrentGeoPosition().then(this.getCityNameByLatLng);
   }
+
+  getCityNameByLatLng = coords => {
+    return this.getWeatherByCoords(coords).then(({ cityName }) => cityName);
+  };
 
   getWeatherByCoords({ latitude, longitude }) {
     let coordsQuery = `&lat=${latitude}&lon=${longitude}`;
