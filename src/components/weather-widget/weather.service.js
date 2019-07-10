@@ -60,6 +60,22 @@ export default class WeatherService {
     return this.getWeatherByCoords(coords).then(({ cityName }) => cityName);
   };
 
+  getCityNameByZip = zip => {
+    return this.getWeatherByZip(zip)
+      .then(({ cityName }) => cityName)
+      .catch(error => {
+        console.warn(error);
+        return null;
+      });
+  };
+
+  getWeatherByZip(zip) {
+    let zipQuery = `&zip=${zip},us`;
+    let apiUrl = this.weatherEndpoint + zipQuery;
+
+    return this.getWeather(apiUrl);
+  }
+
   getWeatherByCoords({ latitude, longitude }) {
     let coordsQuery = `&lat=${latitude}&lon=${longitude}`;
     let apiUrl = this.weatherEndpoint + coordsQuery;

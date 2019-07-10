@@ -65,7 +65,7 @@ export default class CitySearch extends React.Component {
   renderLatLngSuggestion(latLng) {
     const hadler = () => {
       this.weatherService.getCityNameByLatLng(latLng).then(cityName => {
-        this.props.onSearch(cityName);
+        if (cityName) this.props.onSearch(cityName);
       });
     };
 
@@ -74,6 +74,16 @@ export default class CitySearch extends React.Component {
         🌐 coordinates: {latLng.latitude},{latLng.longitude}
       </li>
     );
+  }
+
+  renderZipSuggestion(zip) {
+    const hadler = () => {
+      this.weatherService.getCityNameByZip(zip).then(cityName => {
+        if (cityName) this.props.onSearch(cityName);
+      });
+    };
+
+    return <li onClick={hadler}>🤐 zip: {zip}</li>;
   }
 
   render() {
@@ -86,11 +96,13 @@ export default class CitySearch extends React.Component {
 
     const latLng = getLatLng(inputValue);
 
+    const zip = getZip(inputValue);
+
     return (
       <div className="city-search">
         <input
           type="text"
-          placeholder="input city / lat,lng"
+          placeholder="enter city / lat,lng / ZIP"
           className="city-search__input"
           onChange={event => this.onChange(event)}
           onFocus={event => {
@@ -112,9 +124,11 @@ export default class CitySearch extends React.Component {
         >
           {!isNothingFound && this.renderSuggestions(suggestList)}
           {isEmptySearch && this.renderSuggestions(defaultCities)}
-          {isNothingFound && !latLng && <li disabled>Nothing Found.</li>}
+          {isNothingFound && !latLng && !zip && (
+            <li disabled>Nothing Found.</li>
+          )}
           {latLng && this.renderLatLngSuggestion(latLng)}
-
+          {zip && this.renderZipSuggestion(zip)}
           <LoaderLinear isLoading={this.state.isLoading} />
         </ul>
         <div
@@ -123,6 +137,16 @@ export default class CitySearch extends React.Component {
       </div>
     );
   }
+}
+
+function getZip(query = "") {
+  const zipRegex = /^\d{5}(?:[-\s]\d{4})?$/;
+
+  const matched = zipRegex.exec(query);
+
+  if (!Array.isArray(matched)) return null;
+
+  return matched;
 }
 
 function getLatLng(query = "") {
