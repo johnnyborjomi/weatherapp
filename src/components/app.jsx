@@ -25,7 +25,7 @@ const fullCityList = [
 ];
 
 export class App extends React.Component {
-  state = { cities: [defaultCity, "Phuket"] };
+  state = { cities: [defaultCity, "New York"] };
 
   constructor(props) {
     super(props);
